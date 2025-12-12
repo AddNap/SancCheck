@@ -1,0 +1,23 @@
+# SancCheck - Wymagane pakiety Python
+
+# Podstawowe zależności
+requests>=2.31.0
+lxml>=4.9.0
+reportlab>=4.0.0
+pandas>=2.0.0
+
+# GUI - nowoczesne motywy
+ttkbootstrap>=1.10.0
+
+# Opcjonalne zależności dla lepszej wydajności
+# (można odkomentować jeśli potrzebne)
+# numpy>=1.24.0
+# openpyxl>=3.1.0  # dla Excel files
+# xlsxwriter>=3.1.0  # dla Excel export
+
+# Zależności deweloperskie (opcjonalne)
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+# black>=23.0.0
+# flake8>=6.0.0
+# mypy>=1.5.0

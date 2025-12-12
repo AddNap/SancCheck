@@ -1,0 +1,490 @@
+=== STRONA 1 ===
+Ministerstwo Finansów
+Usługa API do udostępniania danych z systemu
+CRBR
+Specyfikacja Wejścia-Wyjścia
+3.0.2
+Wersja
+Warszawa, 04.05.2022 r.
+Copyright (c) 2022 Ministerstwo Finansów
+
+=== STRONA 2 ===
+1/10
+Historia dokumentu
+Wersja Data wersji Opis Akcja Rozdziały (**) Autorzy Zatwierdził
+(*) (***)
+1.0.0 2019-10-11 Utworzenie dokumentu N W
+2.0.0 2020-11-10 Aktualizacja interfejsu Z 4
+usługi
+3.0.0 2022-04-29 Aktualizacja interfejsu Z
+usługi
+3.0.1 2022-05-04 Aktualizacja linku do Z
+usługi
+3.0.2 2022-05-04 Aktualizacja przykładu Z
+wykorzystania (4.1.3)
+(*) Akcje: W = Wstaw, Z = Zamień, We = Weryfikuj, N = Nowy (**) Rozdziały: W = Wszystkie
+(***) Zatwierdził (jeśli dotyczy) osoba zatwierdzająca podpisuje się w ostatnim wypełnionym wierszu, dla
+zatwierdzonej wersji papierowej, którą przekazuje się do archiwum.
+2/11
+
+=== STRONA 3 ===
+Spis treści
+1. Wprowadzenie ...................................................................................................................................... 4
+1.1 Przeznaczenie .................................................................................................................................. 4
+1.2 Zakres .............................................................................................................................................. 4
+1.3 Definicje, Akronimy, Skróty ............................................................................................................. 4
+1.4 Referencje ....................................................................................................................................... 5
+2. Komunikacja z usługą ............................................................................................................................ 5
+2.1 Komunikaty ............................................................................................................................... 5
+3. Warunki dostępu do usługi ................................................................................................................... 5
+4. Specyfikacja usługi Web Service ApiPrzegladoweCRBR .................................................................... 5
+4.1 Operacja PobierzInformacjeOSpolkachIBeneficjentach ................................................................. 5
+4.1.1 Opis ogólny .............................................................................................................................. 5
+4.1.2 Opis szczegółowy ..................................................................................................................... 6
+4.1.3 Przykład wykorzystania .......................................................................................................... 10
+4.2 Obsługa błędów ............................................................................................................................ 11
+3/11
+
+=== STRONA 4 ===
+1. Wprowadzenie
+1.1 Przeznaczenie
+Celem tego dokumentu jest przedstawienie zasad oraz warunków wymiany informacji z
+usługą systemu e-Podatki ApiPrzegladoweCRBR udostępniającą API web service do
+komunkacji z systemem Centralnego Rejestru Beneficjentów Rzeczywistych (CRBR) w
+zakresie pobierania informacji o Spółkach i Beneficjentach Rzeczywistych.
+1.2 Zakres
+Niniejsze opracowanie przeznaczone jest dla wszystkich podmiotów, które chciałyby
+skorzystać z dostępu do rejestru CRBR.
+1.3 Definicje, Akronimy, Skróty
+CRBR - system, w którym prowadzony jest Centralny Rejestr Beneficjentów
+Rzeczywistych opisany w dokumencie: "Ustawa z dnia 1 marca 2018 r. o przeciwdziałaniu
+praniu pieniędzy oraz finansowaniu terroryzmu". rozdział 6.
+SOAP - (ang. Simple Object Access Protocol) jest protokołem bazującym na standardzie
+XML. Protokół SOAP pozwala aplikacjom na komunikację przez Internet. Standard
+SOAP jest opracowywany przez W3C (http://www.w3.org/TR/soap12-
+part0, http://www.w3.org/TR/soap12-part1, http://www.w3.org/TR/soap12-part2 ).
+Obecna wersja SOAP to 1.2. Protokół SOAP definiuje formaty komunikatów, sposoby
+wysyłania komunikatów i odbierania odpowiedzi, kodowania danych w języku XML oraz
+gramatykę XML służącą do: określania nazw metod, definiowania typów parametrów
+zwracanych wartości oraz opisu typów. Specyfikacja protokołu dopuszcza stosowanie
+różnych protokołów internetowych jako protokołów transportowych. Obecnie najczęściej
+wykorzystywanym protokołem jest HTTP.
+Unicode – standard definiujący zestaw znaków dla wszystkich alfabetów świata (
+http://www.unicode.org )
+UTF-8 – (ang. Unicode Transformation Format) - sposób kodowania znaków Unicode (A
+transformation format of ISO 10646, http://www.ietf.org/rfc/rfc2279.txt )
+W3C – (ang. The World Wide Web Consortium - organizacja zajmująca się
+ustanawianiem standardów dla stron WWW. Publikowane przez W3C rekomendacje nie
+mają mocy prawnej, nakazującej ich użycie, lecz wskazują standardy dla rozwiązań
+technologicznych.
+WS, Web Service – (z ang. usługa sieciowa). Podstawowa technologia wykorzystywana
+w architekturze SOA. Jest to usługa systemu informatycznego, która może być używana
+przez inne komponenty programowe, również komponenty zewnętrzne projektowanego
+systemu. Web Service w paradygmacie SOA stanowi najistotniejszy interfejs (ang. API –
+application programming interface) projektowanego systemu. Web Service jest również
+wykorzystywany wewnętrznie do komunikacji pomiędzy komponentami systemu. WSDL
+- (ang. Web Services Description Language). Plik WSDL to dokument XML, opisujący
+zbiór komunikatów SOAP.
+XML - (ang. Extensible Markup Language - Rozszerzalny Język Znaczników) to
+uniwersalny język formalny przeznaczony do reprezentowania różnych danych w
+ustrukturalizowany sposób. XML jest niezależny od platformy, co umożliwia łatwą
+wymianę dokumentów pomiędzy różnymi systemami i rekomendowany oraz
+specyfikowany przez organizację W3C.
+XSD – (ang. XML Schema Definition - Schemat XML, Schemat Rozszerzalnego Języka
+4/11
+
+=== STRONA 5 ===
+Znaczników) to opracowany przez W3C standard służący do definiowania struktury
+dokumentu XML. Dokumenty zawierające definicje XML Schema zapisuje się zwykle w
+plikach z rozszerzeniem .xsd (od XML Schema Definition).
+1.4 Referencje
+[1] Rozporządzenie Ministra Finansów w sprawie zgłaszania informacji o beneficjentach
+rzeczywistych (rozporządzenie wykonawcze z art. 61 ustawy o przeciwdziałaniu praniu
+pieniędzy oraz finansowaniu terroryzmu określające sposób i tryb składania zgłoszenia
+do CRBR)
+[2] Rozporządzenie Ministra Finansów w sprawie wniosków o udostępnienie informacji o
+beneficjentach rzeczywistych oraz udostępniania tych informacji (rozporządzenie
+wykonawcze z art. 71 ustawy o przeciwdziałaniu praniu pieniędzy oraz finansowaniu
+terroryzmu określające sposób sporządzania i składania wniosków o udostępnienie
+informacji oraz udostępniania informacji z CRBR, tryb składania wniosków oraz
+udostępniania informacji do/z CRBR, a także terminy udostępniania informacji z CRBR)
+[3] Rozdział 6 (Centralny Rejestr Beneficjentów Rzeczywistych) ustawy o
+przeciwdziałaniu praniu pieniędzy oraz finansowaniu terroryzmu (ustawa z dnia 1 marca
+2018, wejdzie w życie 13 lipca 2018)
+2. Komunikacja z usługą
+2.1 Komunikaty
+Przesyłanie danych odbywa się przy wykorzystaniu usługi Web Service systemu ePodatki
+ApiPrzegladoweCRBR. Komunikacja z usługą odbywa się z wykorzystaniem:
+Komunikatu żądania:
+PobierzInformacjeOSpolkachIBeneficjentachZlecenie
+Komunikatu odpowiedzi:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz
+Komunikat żądania oraz komunikat odpowiedzi MUSI być zgodny ze standardem SOAP
+1.2. oraz MUSI mieć format zgodny z aktualnie obowiązującym schematem XML Schema.
+3. Warunki dostępu do usługi
+Usługa jest dostępna publicznie.
+4. Specyfikacja usługi Web Service ApiPrzegladoweCRBR
+Adres usługi Web Service:
+https://bramka-
+crbr.mf.gov.pl:5058/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2022/02/01
+4.1 Operacja PobierzInformacjeOSpolkachIBeneficjentach
+4.1.1 Opis ogólny
+Celem operacji PobierzInformacjeOSpolkachIBeneficjentach jest wyszukanie w rejestrze
+CRBR informacji o Spółkach i ich Beneficjentach Rzeczywistych na podstawie
+wprowadzonych przez System Zewnętrzny lub inną aplikację kryteriów wyszukiwania i
+przekazanie tej informacji do Systemu Zewnętrznego lub innej aplikacji.
+5/11
+
+=== STRONA 6 ===
+4.1.2 Opis szczegółowy
+Dane wejściowe:
+PobierzInformacjeOSpolkachIBeneficjentach – dokument XML zawierający
+dane żądania składający się z elementów:
+PobierzInformacjeOSpolkachIBeneficjentachDane
+Element Opis
+SzczegolyWniosku Szczegółowe kryteria wyszukiwania definiujące
+wniosek o informacje
+SzczegolyWniosku
+Element Opis
+NIP Numer NIP Spółki, dla której należy zwrócić
+informacje o niej i o jej Beneficjentach
+Rzeczywistych
+PESEL Numer PESEL osoby, dla której należy zwrócić
+informacje o niej i Spółkach, w których dana osoba
+jest Beneficjentem Rzeczywistym
+KRS Numer KRS
+Nazwa Nazwa spółki
+DataUrodzenia Data urodzenia osoby, dla której należy zwrócić
+informacje o niej i Spółkach, w których dana osoba
+jest Beneficjentem Rzeczywistym
+PierwszeImie Pierwsze imię osoby, dla której należy zwrócić
+informacje o niej i Spółkach, w których dana osoba
+jest Beneficjentem Rzeczywistym
+Nazwisko Nazwisko osoby, dla której należy zwrócić
+informacje o niej i Spółkach, w których dana osoba
+jest Beneficjentem Rzeczywistym
+DataOd Data, od której (włącznie) należy zwrócić informacje
+o Spółkach i Beneficjentach Rzeczywistych
+DataDo Data, do której (włącznie) należy zwrócić informacje
+o Spółkach i Beneficjentach Rzeczywistych
+Dane wyjściowe:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz – dokument XML
+zawierający dane odpowiedzi składający się z elementów:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane
+Element Opis
+IdentyfikatorWniosku Unikalny, nadawany przez system CRBR
+identyfikator złożonego wniosku
+DataICzasZlozeniaWniosku Czas przekazania wniosku
+DataICzasUdostepnieniaWniosku Czas udostępnienia wniosku
+ListaInformacjiOSpolkachIBeneficjentach Lista informacji o Spółkach i Beneficjentach
+SzczegolyWniosku Informacje o wniosku przekazanym w
+komunikacie wejściowych
+Status Informacje o wyniku zapytania
+CelZapytania Charakter udostępnionych informacji
+6/11
+
+=== STRONA 7 ===
+ListaInformacjiOSpolkachIBeneficjentach
+Element Opis
+SpolkaIBeneficjenci Informacje o Spółce i jej Beneficjentach
+Rzeczywistych
+SpolkaIBeneficjenci
+Element Opis
+Nazwa Pełna nazwa Spółki
+NIP Numer NIP Spółki
+KRS Numer KRS Spółki
+KodFormyOrganizacyjnej Kod formy organizacyjnej Spółki
+OpisFormyOrganizacyjnej Słowny opis formy organizacyjnej Spółki
+KodPocztowy Kod pocztowy miejscowości, w której mieści się
+siedziba Spółki
+Miejscowosc Miejscowość, w której mieści się siedziba Spółki
+Ulica Ulica, przy której znajduje się siedziba Spółki
+(łącznie z nazwą rodzaju ulicy: ul., pl., al. itp.)
+NrDomu Numer domu (posesji), pod którym mieści się
+siedziba Spółki
+NrLokalu Numer lokalu (posesji), w którym mieści się
+siedziba Spółki
+Teryt Teryt - województwo, powiat, gmina
+Numer Nr domu (posesji), pod którym mieści się siedziba
+spółki w przypadku adresu zagranicznego
+InneDane Inne dane adresu zagranicznego
+Kraj 2-znakowe oznaczenie kraju dla adresu
+zagranicznego
+ListaBeneficjentowRzeczywistych Zbiór zawierający listę Beneficjentów
+Rzeczywistych należących do Spółki
+ListaReprezentantow Zbiór zawierający listę Reprezentantów Spółki
+DataPoczatkuPrezentacjiZgloszenia Data, od której jest prezentowane Zgłoszenie
+DataKoncaPrezentacjiZgloszenia Data końca prezentacji Zgłoszenia
+Skorygowane Informacja o tym, czy i kiedy dane Zgłoszenie było
+korygowane
+NumerReferencyjny Numer referencyjny Zgłoszenia
+RejestrZagranicznyTrust Rejestr zagraniczny Trust
+ListaInformacjiORozbieznosciach Lista informacji o rozbieżnościach
+Postepowanie Informacja o prowadzonym lub zakończonym
+postępowaniu
+Teryt
+Element Opis
+Wojewodztwo Województwo
+Powiat Powiat
+Gmina Gmina
+RejestrZagranicznyTrust
+Element Opis
+KrajProwadzacyRejestr 2-znakowe oznaczenie kraju prowadzącego
+rejestr
+NazwaRejestru Nazwa rejestru zagranicznego
+7/11
+
+=== STRONA 8 ===
+NumerWRejestrze Numer w rejestrze zagranicznym
+ListaBeneficjentowRzeczywistych
+Element Opis
+BeneficjentRzeczywisty Informacje o Beneficjencie Rzeczywistym
+BeneficjentRzeczywisty
+Element Opis
+PierwszeImie Pierwsze imię Beneficjenta Rzeczywistego
+KolejneImiona Lista oddzielonych przecinkami [,]
+kolejnych imion Beneficjenta
+Rzeczywistego
+Nazwisko Pełne nazwisko Beneficjenta Rzeczywistego
+PESEL Numer PESEL Beneficjenta Rzeczywistego
+DataUrodzenia Data urodzenia Beneficjenta Rzeczywistego
+nieposiadającego numeru PESEL
+Obywatelstwo 2-znakowe oznaczenie kraju, którego
+obywatelem jest Beneficjent Rzeczywisty
+KrajZamieszkania 2-znakowe oznaczenie kraju, w którym
+zamieszkuje na stałe lub ma obywatelstwo
+Beneficjent Rzeczywisty
+ListaInformacjiOUdzialach Lista informacji o udziałach Beneficjenta
+Rzeczywistego
+CzyIstniejeWBaziePESEL True - jeżeli weryfikacja w bazie PESEL
+potwierdziła istnienie, w przeciwnym przypadku
+False
+DataICzasWeryfikacji Data i czas weryfikacji wystąpienia numeru
+PESEL w bazie PESEL
+NazwaBeneficjentaGrupowego Nazwa Beneficjenta Grupowego
+InformacjeOUprawnieniachPrzyslugujacych Informacje o uprawnieniach przysługujących
+BeneficjentowiGrupowemuTrust Beneficjentowi GrupowemuTrust
+ListaInformacjiOUdzialach
+Element Opis
+InformacjaOUdzialach Informacja o wielkości i charakterze udziału lub
+uprawnieniach przysługujących Beneficjentowi
+Rzeczywistemu.
+InformacjaOUdzialach
+Element Opis
+UprawnieniaWlascicielskieBezposrednie Bezpośrednie uprawnienia właścicielskie
+Beneficjenta Rzeczywistego
+UprawnieniaWlascicielskiePosrednie Pośrednie uprawnienia właścicielskie Beneficjenta
+Rzeczywistego
+InneUprawnienia Pozostałe uprawnienia Beneficjenta
+Rzeczywistego
+UprawnieniaWlascicielskieBezposrednie
+Element Opis
+KodUprawnienWlascicielskich Kod rodzaju uprawnień właścicielskich
+RodzajUprawnienWlascicielskich Słowny opis rodzaju uprawnień właścicielskich
+8/11
+
+=== STRONA 9 ===
+KodJednostkiMiary Kod jednostki miary udziału
+JednostkaMiary Opis jednostki miary
+Ilosc Liczba określająca wielkość własności w
+jednostkach miary udziału
+InformacjaOUprzywilejowaniu Rodzaj i opis uprzywilejowania
+InformacjaOUprzywilejowaniu
+Element Opis
+KodUprzywilejowania Rodzaj uprzywilejowania akcji lub udziałów
+RodzajUprzywilejowania Opis rodzaju uprzywilejowania
+OpisUprzywilejowania Słowny opis przywileju
+ListaReprezentantow
+Element Opis
+Reprezentant Informacje o osobie reprezentującej Spółkę
+Reprezentant
+Element Opis
+PierwszeImie Pierwsze imię Reprezentanta
+KolejneImiona Lista oddzielonych przecinkami [,] kolejnych
+imion Reprezentanta
+Nazwisko Pełne nazwisko Reprezentanta
+PESEL Numer PESEL Reprezentanta
+DataUrodzenia Data urodzenia Reprezentanta nieposiadającego
+numeru PESEL
+Obywatelstwo 2-znakowe oznaczenie kraju, którego
+Reprezentant jest obywatelem
+KrajZamieszkania 2-znakowe oznaczenie kraju, w którym
+Reprezentant zamieszkuje na stałe lub ma
+obywatelstwo
+RodzajReprezentacji Rodzaj reprezentacji Spółki przez Reprezentanta
+InneInformacje Inne informacje w przypadku wybrania funkcji
+zgłaszającego jako 'zgłaszający inny'
+ListaInformacjiORozbieznosciach
+Element Opis
+InformacjaORozbieznosciach Zestaw informacji o zgłoszonych do Zgłoszenia
+rozbieżnościach przekazywanych
+Zainteresowanym i Systemom zewnętrznym
+InformacjaORozbieznosciach
+Element Opis
+IdentyfikatorUwagi Identyfikator uwagi
+InformacjaDlaZainteresowanego Informacja o rozbieżnościach przekazywana
+Zainteresowanemu
+SzczegolyWniosku
+Element Opis
+NIP Numer NIP Spółki, dla której zwracane są
+informacje o niej i o jej Beneficjentach
+Rzeczywistych.
+PESEL Numer PESEL osoby, dla której zwracane są
+informacje o niej i Spółkach, w których dana
+osoba jest Beneficjentem Rzeczywistym
+9/11
+
+=== STRONA 10 ===
+KRS Numer KRS
+Nazwa Nazwa spółki
+DataUrodzenia Data urodzenia osoby, dla której zwracane są
+informacje o niej i Spółkach, w których dana
+osoba jest Beneficjentem Rzeczywistym
+PierwszeImie Pierwsze imię osoby, dla której zwracane są
+informacje o niej i Spółkach, w których dana
+osoba jest Beneficjentem Rzeczywistym
+Nazwisko Nazwisko osoby, dla której zwracane są
+informacje o niej i Spółkach, w których dana
+osoba jest Beneficjentem Rzeczywistym
+DataOd Data, od której (włącznie) zwracane są informacje
+o Spółkach i Beneficjentach Rzeczywistych
+DataDo Data, do której (włącznie) zwracane są informacje
+o Spółkach i Beneficjentach Rzeczywistych
+4.1.3 Przykład wykorzystania
+Dane wysłane do Web Service:
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+xmlns:ns="http://www.mf.gov.pl/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2022/02/01"
+xmlns:ns1="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">
+<soap:Header/>
+<soap:Body>
+<ns:PobierzInformacjeOSpolkachIBeneficjentach>
+<PobierzInformacjeOSpolkachIBeneficjentachDane>
+<ns1:SzczegolyWniosku>
+<ns1:NIP>1120149662</ns1:NIP>
+</ns1:SzczegolyWniosku>
+</PobierzInformacjeOSpolkachIBeneficjentachDane>
+</ns:PobierzInformacjeOSpolkachIBeneficjentach>
+</soap:Body>
+</soap:Envelope></soap:Envelope>
+Dane zwrócone przez Web Service:
+<NS1:Envelope xmlns:NS1="http://www.w3.org/2003/05/soap-envelope">
+<NS1:Body>
+<NS2:PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz
+xmlns:NS2="http://www.mf.gov.pl/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2022/02/01">
+<PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane>
+<in10:IdentyfikatorWniosku
+xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">5DB49FB6CBA7438FB643468CA8F58FBC</in10:IdentyfikatorWniosku>
+<in10:DataICzasZlozeniaWniosku xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">2022-05-
+05T15:46:18</in10:DataICzasZlozeniaWniosku>
+<in10:DataICzasUdostepnieniaWniosku xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">2022-05-
+05T15:46:18</in10:DataICzasUdostepnieniaWniosku>
+<in10:ListaInformacjiOSpolkachIBeneficjentach xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">
+<in10:SpolkaIBeneficjenci>
+<in10:Nazwa>NAZWA 1</in10:Nazwa>
+<in10:NIP>1120149662</in10:NIP>
+<in10:KRS>0000747231</in10:KRS>
+<in10:KodFormyOrganizacyjnej>130</in10:KodFormyOrganizacyjnej>
+<in10:OpisFormyOrganizacyjnej>Trust, którego powiernik (os.równ.) zam./działa w RP</in10:OpisFormyOrganizacyjnej>
+<in10:KodPocztowy>23-445</in10:KodPocztowy>
+<in10:Miejscowosc>ASD</in10:Miejscowosc>
+<in10:Ulica>ASD</in10:Ulica>
+<in10:Numer>34</in10:Numer>
+<in10:Kraj>PG</in10:Kraj>
+<in10:ListaBeneficjentowRzeczywistych>
+<in10:BeneficjentRzeczywisty>
+<in10:PierwszeImie>AAA</in10:PierwszeImie>
+<in10:Nazwisko>BBB</in10:Nazwisko>
+<in10:PESEL>11111111111</in10:PESEL>
+<in10:Obywatelstwo>PL</in10:Obywatelstwo>
+<in10:KrajZamieszkania>PL</in10:KrajZamieszkania>
+<in10:ListaInformacjiOUdzialach>
+<in10:InformacjaOUdzialach>
+<in10:UprawnieniaWlascicielskieBezposrednie>
+<in10:KodUprawnienWlascicielskich>024</in10:KodUprawnienWlascicielskich>
+<in10:RodzajUprawnienWlascicielskich>beneficjent trustu</in10:RodzajUprawnienWlascicielskich>
+<in10:KodJednostkiMiary>05</in10:KodJednostkiMiary>
+<in10:JednostkaMiary>identyfikator trustu</in10:JednostkaMiary>
+<in10:Ilosc>1E+0</in10:Ilosc>
+<in10:InformacjaOUprzywilejowaniu>
+<in10:KodUprzywilejowania>99</in10:KodUprzywilejowania>
+<in10:RodzajUprzywilejowania>brak</in10:RodzajUprzywilejowania>
+10/11
+
+=== STRONA 11 ===
+</in10:InformacjaOUprzywilejowaniu>
+</in10:UprawnieniaWlascicielskieBezposrednie>
+</in10:InformacjaOUdzialach>
+</in10:ListaInformacjiOUdzialach>
+</in10:BeneficjentRzeczywisty>
+<in10:BeneficjentRzeczywisty>
+<in10:PierwszeImie>CCC</in10:PierwszeImie>
+<in10:Nazwisko>DDD</in10:Nazwisko>
+<in10:DataUrodzenia>2010-01-01</in10:DataUrodzenia>
+<in10:Obywatelstwo>PL</in10:Obywatelstwo>
+<in10:KrajZamieszkania>DZ</in10:KrajZamieszkania>
+<in10:ListaInformacjiOUdzialach>
+<in10:InformacjaOUdzialach>
+<in10:UprawnieniaWlascicielskieBezposrednie>
+<in10:KodUprawnienWlascicielskich>024</in10:KodUprawnienWlascicielskich>
+<in10:RodzajUprawnienWlascicielskich>beneficjent trustu</in10:RodzajUprawnienWlascicielskich>
+<in10:KodJednostkiMiary>05</in10:KodJednostkiMiary>
+<in10:JednostkaMiary>identyfikator trustu</in10:JednostkaMiary>
+<in10:Ilosc>1E+0</in10:Ilosc>
+<in10:InformacjaOUprzywilejowaniu>
+<in10:KodUprzywilejowania>99</in10:KodUprzywilejowania>
+<in10:RodzajUprzywilejowania>brak</in10:RodzajUprzywilejowania>
+</in10:InformacjaOUprzywilejowaniu>
+</in10:UprawnieniaWlascicielskieBezposrednie>
+</in10:InformacjaOUdzialach>
+</in10:ListaInformacjiOUdzialach>
+</in10:BeneficjentRzeczywisty>
+<in10:BeneficjentRzeczywisty>
+<in10:NazwaBeneficjentaGrupowego>EEE</in10:NazwaBeneficjentaGrupowego>
+<in10:InformacjeOUprawnieniachPrzyslugujacychBeneficjentowiGrupowemuTrust>FFF</in10:InformacjeOUprawnieniachPrzyslugujacychBeneficjentowiG
+rupowemuTrust>
+</in10:BeneficjentRzeczywisty>
+</in10:ListaBeneficjentowRzeczywistych>
+<in10:ListaReprezentantow>
+<in10:Reprezentant>
+<in10:PierwszeImie>AAA</in10:PierwszeImie>
+<in10:Nazwisko>BBB</in10:Nazwisko>
+<in10:PESEL>11111111111</in10:PESEL>
+<in10:Obywatelstwo>PL</in10:Obywatelstwo>
+<in10:KrajZamieszkania>PL</in10:KrajZamieszkania>
+<in10:RodzajReprezentacji>ZGŁASZAJĄCY - INNY</in10:RodzajReprezentacji>
+<in10:InneInformacje>FSDF</in10:InneInformacje>
+</in10:Reprezentant>
+</in10:ListaReprezentantow>
+<in10:DataPoczatkuPrezentacjiZgloszenia>2022-05-05</in10:DataPoczatkuPrezentacjiZgloszenia>
+<in10:DataKoncaPrezentacjiZgloszenia>2022-05-05</in10:DataKoncaPrezentacjiZgloszenia>
+<in10:Skorygowane>Zgłoszenie skorygowano w dniu 2022-04-26 12:28:39</in10:Skorygowane>
+<in10:NumerReferencyjny>65d858da2f45f8c601afa7c0e3e3ee71</in10:NumerReferencyjny>
+<in10:RejestrZagranicznyTrust>
+<in10:KrajProwadzacyRejestr>GB</in10:KrajProwadzacyRejestr>
+<in10:NazwaRejestru>111111111111111111</in10:NazwaRejestru>
+<in10:NumerWRejestrze>11111111111111111111111111111</in10:NumerWRejestrze>
+</in10:RejestrZagranicznyTrust>
+</in10:SpolkaIBeneficjenci>
+</in10:ListaInformacjiOSpolkachIBeneficjentach>
+<in10:SzczegolyWniosku xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">
+<in10:NIP>1111111111</in10:NIP>
+</in10:SzczegolyWniosku>
+<in10:Status xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">IstniejaInformacje</in10:Status>
+<in10:CelZapytania
+xmlns:in10="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2022/02/01">BeneficjenciISpolki</in10:CelZapytania>
+</PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane>
+</NS2:PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz>
+</NS1:Body>
+</NS1:Envelope>
+4.2 Obsługa błędów
+W przypadku wystąpienia błędu informacje o Spółkach i Beneficjentach Rzeczywistych
+nie są zwracane. O tym czy wystąpił błąd informuje element Status. Możliwe wartości to:
+• IstniejaInformacje - Status informujący o odnalezieniu w CRBR informacji
+pasujących do kryteriów podanych w zapytaniu.
+• BrakInformacji - Status informujący o braku w CRBR informacji pasujących do
+kryteriów podanych w zapytaniu.
+• BladFormalny - Status informujący o niepoprawnej konstrukcji zapytania.
+W przypadkach wystąpienia innych błędów technicznych usługa zwraca komunikat Fault
+zgodny ze specyfikacją SOAP 1.2. 4.3 Plik WSDL dla usługi Web Service
+ApiPrzegladoweCRBR.wsdl
+11/11

@@ -1,0 +1,169 @@
+Ministerstwo Finansów
+Usługa API do udostępniania danych z systemu CRBR
+Specyfikacja Wejścia-Wyjścia
+Wersja 1.0.0
+Warszawa,13 X 2019 r.
+Copyright (c) 2019 Ministerstwo Finansów
+Spis treści
+1.	Wprowadzenie	3
+1.1	Przeznaczenie	3
+1.2	Zakres stosowania	3
+1.3	Definicje, Akronimy, Skróty	3
+1.4	Referencje	4
+2.	Komunikacja z usługą	5
+2.1	Komunikaty	5
+3.	Warunki dostępu do usługi	5
+4.	Specyfikacja usługi Web Service ApiPrzegladoweCRBR	6
+4.1	Operacja PobierzInformacjeOSpolkachIBeneficjentach	6
+4.1.1	Opis ogólny	6
+4.1.2	Opis szczegółowy	6
+4.1.3	Przykład wykorzystania	10
+4.2	Obsługa błędów	12
+4.3	Plik WSDL dla usługi Web Service	12
+Wprowadzenie
+Przeznaczenie
+Dokument przedstawia zasady oraz warunki wymiany informacji z usługą ApiPrzegladoweCRBR udostępniającą API web service do komunkacji z systemem Centralnego Rejestru Beneficjentów Rzeczywistych (CRBR) w zakresie pobierania informacji o Spółkach i Beneficjentach Rzeczywistych.
+Zakres stosowania
+Niniejsze opracowanie przeznaczone jest dla wszystkich podmiotów, które chciałyby skorzystać z dostępu do rejestru CRBR.
+Definicje, Akronimy, Skróty
+CRBR – system teleinformatyczny, w którym prowadzony jest Centralny Rejestr Beneficjentów Rzeczywistych, o którym mowa w ustawie z dnia 1 marca 2018 r. o przeciwdziałaniu praniu pieniędzy oraz finansowaniu terroryzmu rozdział 6 (Dz. U. z 2019 r. poz. 1115, z późn. zm.).
+SOAP - (ang. Simple Object Access Protocol) jest protokołem bazującym na standardzie XML. Protokół SOAP pozwala aplikacjom na komunikację przez Internet. Standard SOAP jest opracowywany przez W3C (http://www.w3.org/TR/soap12-part0, http://www.w3.org/TR/soap12-part1,
+http://www.w3.org/TR/soap12-part2 ).
+Obecna wersja SOAP to 1.2. Protokół SOAP definiuje formaty komunikatów, sposoby wysyłania komunikatów i odbierania odpowiedzi, kodowania danych w języku XML oraz gramatykę XML służącą do: określania nazw metod, definiowania typów parametrów zwracanych wartości oraz opisu typów. Specyfikacja protokołu dopuszcza stosowanie różnych protokołów internetowych jako protokołów transportowych. Obecnie najczęściej wykorzystywanym protokołem jest HTTP.
+Unicode – standard definiujący zestaw znaków dla wszystkich alfabetów świata ( http://www.unicode.org )
+UTF-8 – (ang. Unicode Transformation Format) -  sposób kodowania znaków Unicode (A transformation format of ISO 10646, http://www.ietf.org/rfc/rfc2279.txt )
+W3C – (ang. The World Wide Web Consortium - organizacja zajmująca się ustanawianiem standardów dla stron WWW. Publikowane przez W3C rekomendacje nie mają mocy prawnej, nakazującej ich użycie, lecz wskazują standardy dla rozwiązań technologicznych.
+WS, Web Service – (z ang. usługa sieciowa). Podstawowa technologia wykorzystywana w architekturze SOA. Jest to usługa systemu informatycznego, która może być używana przez inne komponenty programowe, również komponenty zewnętrzne projektowanego systemu. Web Service w paradygmacie SOA stanowi najistotniejszy interfejs (ang. API – application programming interface) projektowanego systemu. Web Service jest również wykorzystywany wewnętrznie do komunikacji pomiędzy komponentami systemu.
+WSDL - (ang. Web Services Description Language). Plik WSDL to dokument XML, opisujący zbiór komunikatów SOAP.
+XML - (ang. Extensible Markup Language - Rozszerzalny Język Znaczników) to uniwersalny język formalny przeznaczony do reprezentowania różnych danych w ustrukturalizowany sposób. XML jest niezależny od platformy, co umożliwia łatwą wymianę dokumentów pomiędzy różnymi systemami i rekomendowany oraz specyfikowany przez organizację W3C.
+XSD – (ang. XML Schema Definition - Schemat XML, Schemat Rozszerzalnego Języka Znaczników) to opracowany przez W3C standard służący do definiowania struktury dokumentu XML. Dokumenty zawierające definicje XML Schema zapisuje się zwykle w plikach z rozszerzeniem .xsd (od XML Schema Definition).
+Referencje
+[1] Rozporządzenie Ministra Finansów w sprawie zgłaszania informacji o beneficjentach rzeczywistych (Dz. U. z 2018 r. poz. 968, rozporządzenie wykonawcze z art. 62 ustawy o przeciwdziałaniu praniu pieniędzy oraz finansowaniu terroryzmu określające sposób i tryb składania zgłoszenia do CRBR)
+[2] Rozporządzenie Ministra Finansów w sprawie wniosków o udostępnienie informacji o beneficjentach rzeczywistych oraz udostępniania tych informacji (Dz.U. z 2018 r. poz. 965, rozporządzenie wykonawcze z art. 71 ustawy o przeciwdziałaniu praniu pieniędzy oraz finansowaniu terroryzmu określające sposób sporządzania i składania wniosków o udostępnienie informacji oraz udostępniania informacji z CRBR, tryb składania wniosków oraz udostępniania informacji do/z CRBR, a także terminy udostępniania informacji z CRBR)
+[3] Rozdział 6 (Centralny Rejestr Beneficjentów Rzeczywistych) ustawy o przeciwdziałaniu praniu pieniędzy oraz finansowaniu terroryzmu (Dz. U. z 2019 r. poz. 1115, z późn. zm.)
+Komunikacja z usługą
+Komunikaty
+Przesyłanie danych odbywa się przy wykorzystaniu usługi Web Service ApiPrzegladoweCRBR systemu teleinformatycznego CRBR. Komunikacja z usługą odbywa się z wykorzystaniem:
+Komunikatu żądania:
+PobierzInformacjeOSpolkachIBeneficjentachZlecenie
+Komunikatu odpowiedzi:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz
+Komunikat żądania oraz komunikat odpowiedzi MUSI być zgodny ze standardem SOAP 1.2. oraz MUSI mieć format zgodny z aktualnie obowiązującym schematem XML Schema.
+Warunki dostępu do usługi
+Usługa jest dostępna publicznie.
+Specyfikacja usługi Web Service ApiPrzegladoweCRBR
+Adres usługi Web Service:
+https://bramka-crbr.mf.gov.pl:5058/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2019/07/01
+Operacja PobierzInformacjeOSpolkachIBeneficjentach
+Opis ogólny
+Celem operacji PobierzInformacjeOSpolkachIBeneficjentach jest: wyszukanie w rejestrze CRBR informacji o Spółkach i ich Beneficjentach Rzeczywistych na podstawie wprowadzonych przez System Zewnętrzny lub inną aplikację kryteriów wyszukiwania oraz przekazanie tej informacji do Systemu Zewnętrznego lub innej aplikacji.
+Opis szczegółowy
+Dane wejściowe:
+PobierzInformacjeOSpolkachIBeneficjentach – dokument XML zawierający dane żądania składający się z elementów:
+PobierzInformacjeOSpolkachIBeneficjentachDane
+SzczegolyWniosku
+Pobranie informacji jest możliwe poprzez podanie w danych wejściowych:
+numeru identyfikacji podatkowej społki albo
+numeru Powszechnego Elektronicznego Systemu Ewidencji Ludności (PESEL) beneficjenta rzeczywistego albo
+pierwszego imienia, nazwiska i daty urodzenia beneficjenta rzeczywistego (w przypadku beneficjentow rzeczywistych zgłoszonych do CRBR jako osoby nieposiadające numeru PESEL, tj. wyszukane zostaną wyłącznie osoby, które zostały zgłoszone do CRBR bez numeru PESEL).
+W każdym z powyższych przypadków możliwe jest podanie w danych wejściowych opcjonalnej pary dat: data od i data do. W przypadku niepodania dat nastąpi pobranie danych wg stanu bazy CRBR na moment ich udostępnienia, w przypadku podania pary dat od-do nastapi pobranie danych za okres wyznaczony przez te daty (włącznie).
+Dane wyjściowe:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz – dokument XML zawierający dane odpowiedzi składający się z elementów:
+PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane
+ListaInformacjiOSpolkachIBeneficjentach
+SpolkaIBeneficjenci
+ListaBeneficjentowRzeczywistych
+BeneficjentRzeczywisty
+ListaInformacjiOUdzialach
+InformacjaOUdzialach
+UprawnieniaWlascicielskieBezposrednie
+InformacjaOUprzywilejowaniu
+ListaReprezentantow
+Reprezentant
+SzczegolyWniosku
+Przykład wykorzystania
+Dane wysłane do Web Service:
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ns="http://www.mf.gov.pl/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2019/07/01" xmlns:ns1="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">
+<soap:Header/>
+<soap:Body>
+<ns:PobierzInformacjeOSpolkachIBeneficjentach>
+<PobierzInformacjeOSpolkachIBeneficjentachDane>
+<ns1:SzczegolyWniosku>
+<ns1:NIP>8264914175</ns1:NIP>
+</ns1:SzczegolyWniosku>
+</PobierzInformacjeOSpolkachIBeneficjentachDane>
+</ns:PobierzInformacjeOSpolkachIBeneficjentach>
+</soap:Body>
+</soap:Envelope>
+Dane zwrócone przez Web Service:
+<NS1:Envelope xmlns:NS1="http://www.w3.org/2003/05/soap-envelope">
+<NS1:Body>
+<io2:PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz xmlns:io2="http://www.mf.gov.pl/uslugiBiznesowe/uslugiESB/AP/ApiPrzegladoweCRBR/2019/07/01">
+<PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane>
+<io:IdentyfikatorWniosku xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">92CB0D65B4754567A959F03C6830B798</io:IdentyfikatorWniosku>
+<io:DataICzasZlozeniaWniosku xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">2019-10-11T14:09:13.285939+02:00</io:DataICzasZlozeniaWniosku>
+<io:DataICzasUdostepnieniaWniosku xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">2019-10-11T14:09:13.301567+02:00</io:DataICzasUdostepnieniaWniosku>
+<io:ListaInformacjiOSpolkachIBeneficjentach xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">
+<io:SpolkaIBeneficjenci>
+<io:Nazwa>NAZWA 1 BENEK</io:Nazwa>
+<io:NIP>8264914175</io:NIP>
+<io:KRS>4536436456</io:KRS>
+<io:KodFormyOrganizacyjnej>118</io:KodFormyOrganizacyjnej>
+<io:OpisFormyOrganizacyjnej>Spółka jawna</io:OpisFormyOrganizacyjnej>
+<io:KodPocztowy>22-222</io:KodPocztowy>
+<io:Miejscowosc>WARSZAWA</io:Miejscowosc>
+<io:NrDomu>2</io:NrDomu>
+<io:ListaBeneficjentowRzeczywistych>
+<io:BeneficjentRzeczywisty>
+<io:PierwszeImie>AAA</io:PierwszeImie>
+<io:Nazwisko>AAA</io:Nazwisko>
+<io:PESEL>93011586076</io:PESEL>
+<io:Obywatelstwo>DZ</io:Obywatelstwo>
+<io:KrajZamieszkania>DZ</io:KrajZamieszkania>
+<io:ListaInformacjiOUdzialach>
+<io:InformacjaOUdzialach>
+<io:UprawnieniaWlascicielskieBezposrednie>
+<io:KodUprawnienWlascicielskich>001</io:KodUprawnienWlascicielskich>
+<io:RodzajUprawnienWlascicielskich>wspólnik spółki jawnej</io:RodzajUprawnienWlascicielskich>
+<io:KodJednostkiMiary>02</io:KodJednostkiMiary>
+<io:JednostkaMiary>PLN</io:JednostkaMiary>
+<io:Ilosc>2.2E+1</io:Ilosc>
+<io:InformacjaOUprzywilejowaniu>
+<io:KodUprzywilejowania>06</io:KodUprzywilejowania>
+<io:RodzajUprzywilejowania>inne</io:RodzajUprzywilejowania>
+</io:InformacjaOUprzywilejowaniu>
+</io:UprawnieniaWlascicielskieBezposrednie>
+</io:InformacjaOUdzialach>
+</io:ListaInformacjiOUdzialach>
+</io:BeneficjentRzeczywisty>
+</io:ListaBeneficjentowRzeczywistych>
+<io:ListaReprezentantow>
+<io:PierwszeImie>KASIA</io:PierwszeImie>
+<io:Nazwisko>NOWAK</io:Nazwisko>
+<io:DataUrodzenia>2000-01-03</io:DataUrodzenia>
+<io:Obywatelstwo>PL</io:Obywatelstwo>
+<io:KrajZamieszkania>PL</io:KrajZamieszkania>
+<io:RodzajReprezentacji>reprezentant</io:RodzajReprezentacji>
+</io:Reprezentant>
+</io:ListaReprezentantow>
+<io:DataPoczatkuPrezentacjiZgloszenia>2019-10-11</io:DataPoczatkuPrezentacjiZgloszenia>
+<io:DataKoncaPrezentacjiZgloszenia>2019-10-11</io:DataKoncaPrezentacjiZgloszenia>
+<io:Skorygowane>Zgłoszenie skorygowano w dniu: 2001-12-31 12:00:00</io:Skorygowane>
+</io:SpolkaIBeneficjenci>
+</io:ListaInformacjiOSpolkachIBeneficjentach>
+<io:SzczegolyWniosku xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">
+<io:NIP>8264914175</io:NIP>
+</io:SzczegolyWniosku>
+<io:Status xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">IstniejaInformacje</io:Status>
+<io:CelZapytania xmlns:io="http://www.mf.gov.pl/schematy/AP/ApiPrzegladoweCRBR/2019/07/01">BeneficjenciISpolki</io:CelZapytania>
+</PobierzInformacjeOSpolkachIBeneficjentachOdpowiedzDane>
+</io2:PobierzInformacjeOSpolkachIBeneficjentachOdpowiedz>
+</NS1:Body>
+</NS1:Envelope>
+Obsługa błędów
+W przypadku wystąpienia błędu informacje o Spółkach i Beneficjentach Rzeczywistych nie są zwracane. O tym, czy wystąpił błąd informuje element Status. Możliwe wartości to:
+IstniejaInformacje - Status informujący o odnalezieniu w CRBR informacji pasujących do kryteriów podanych w zapytaniu.
+BrakInformacji - Status informujący o braku w CRBR informacji pasujących do kryteriów podanych w zapytaniu.
+BladFormalny - Status informujący o niepoprawnej konstrukcji zapytania.
+W przypadkach wystąpienia innych błędów technicznych usługa zwraca komunikat Fault zgodny ze specyfikacją SOAP 1.2.
+Plik WSDL dla usługi Web Service
